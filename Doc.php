@@ -124,13 +124,29 @@ Abstraction
 
 Hiding internal details.
 In PHP: abstract classes and interfaces.
+
+You define rules, child classes complete them.
 */
 abstract class Shape {
     abstract public function area();
 }
-
 class Circle extends Shape {
     public function area() {
         return 3.14 * 5 * 5;
     }
 }
+
+
+abstract class PaymentGateway {
+    abstract public function pay($amount); // abstract method
+
+    public function validate() {           // normal method
+        echo "Validating payment details...<br>";
+    }
+}
+class PayPalPayment extends PaymentGateway {
+    public function pay($amount) {
+        echo "Paid $amount using PayPal.<br>";
+    }
+}
+
