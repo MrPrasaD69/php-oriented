@@ -67,10 +67,10 @@ Encapsulation
 
 Restricting access to data using public, private, protected.
 
-Visibility	Accessible from class	Inherited class	Outside
-public	✔️	✔️	✔️
-protected	✔️	✔️	❌
-private	✔️	❌	❌
+Visibility |	from class |	Inherited | class	Outside
+public	         ✔️	           ✔️	          ✔️
+protected	     ✔️	           ✔️	          ❌
+private	       ✔️	           ❌	          ❌
 */
 
 class Bank {
