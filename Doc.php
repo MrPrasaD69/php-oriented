@@ -48,12 +48,12 @@ Constructor runs automatically when an object is created.
 
 Destructor runs when script ends or object is destroyed.
 */
-class Test {
-    public function __construct() {
+class Test{
+    public function __construct(){
         echo "Object Created";
     }
 
-    public function __destruct() {
+    public function __destruct(){
         echo "Object Destroyed";
     }
 }
@@ -63,9 +63,9 @@ $obj = new Test();
 
 
 /*
-Encapsulation
+Encapsulation - Avoid direct access to properties and use setter functions to modify
 
-Restricting access to data using public, private, protected.
+Restricting access to data using public, private, protected acess modifiers
 
 Visibility |  From class |	Inherited class  |	Outside
 public	         ✔️	               ✔️	            ✔️
@@ -73,11 +73,15 @@ protected	     ✔️	               ✔️	            ❌
 private	         ✔️	               ❌	           ❌
 */
 
-class Bank {
+class Bank{
     private $balance = 1000;
 
-    public function getBalance() {
+    public function getBalance(){
         return $this->balance;
+    }
+
+    public function setBalance($amt){
+        return $this->balance = $amt;
     }
 }
 
@@ -88,13 +92,13 @@ Inheritance
 
 One class inherits another class using extends.
 */
-class Animal {
-    public function speak() {
+class Animal{
+    public function speak(){
         echo "Animal speaks";
     }
 }
 
-class Dog extends Animal {
+class Dog extends Animal{
 }
 
 $dog = new Dog();
@@ -106,14 +110,14 @@ Polymorphism
 
 Same method name, different behaviour.
 */
-class Animal {
-    public function sound() {
+class Animal{
+    public function sound(){
         echo "Some sound";
     }
 }
 
-class Cat extends Animal {
-    public function sound() {
+class Cat extends Animal{
+    public function sound(){
         echo "Meow";
     }
 }
@@ -122,31 +126,49 @@ class Cat extends Animal {
 /*
 Abstraction
 
-Hiding internal details.
+Defining rules for the classes that implement them
 In PHP: abstract classes and interfaces.
 
-You define rules, child classes complete them.
+You define rules, child classes follow them.
 */
-abstract class Shape {
+abstract class Shape{
     abstract public function area();
 }
-class Circle extends Shape {
+class Circle extends Shape{
     public function area() {
         return 3.14 * 5 * 5;
     }
 }
 
 
-abstract class PaymentGateway {
+abstract class PaymentGateway{
     abstract public function pay($amount); // abstract method
 
-    public function validate() {           // normal method
+    public function validate(){           // normal method
         echo "Validating payment details...<br>";
     }
 }
-class PayPalPayment extends PaymentGateway {
-    public function pay($amount) {
+class PayPalPayment extends PaymentGateway{
+    public function pay($amount){
         echo "Paid $amount using PayPal.<br>";
     }
 }
 
+//-------------------------------------------------------
+//Interfaces - Defining Rules so child classes follow them
+interface PaymentGateway{
+    public function pay(int $amount):bool;
+}
+
+class Razorpay implements PaymentGateway{
+    public function pay(int $amount):bool{
+        return true;
+    }
+}
+
+$gateway = new Razorpay();
+function processPayment(PaymentGateway $object){
+    return  $object->pay(100);
+}
+
+$resp = processPayment($gateway);
