@@ -148,7 +148,7 @@ abstract class PaymentGateway{
         echo "Validating payment details...<br>";
     }
 }
-class PayPalPayment extends PaymentGateway{
+class GooglePay extends PaymentGateway{
     public function pay($amount){
         echo "Paid $amount using PayPal.<br>";
     }
