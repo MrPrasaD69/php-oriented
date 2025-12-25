@@ -265,3 +265,59 @@ class Wallet{
 $wallet = new Wallet();
 $resp = $wallet->setBalance(500);
 echo $resp;
+
+
+//Trait with Conflict
+trait A {
+    public function hello() {
+        echo "Hello from A";
+    }
+}
+trait B {
+    public function hello() {
+        echo "Hello from B";
+    }
+}
+class Test {
+    use A, B {
+        A::hello insteadof B; //insteadof => php method to select from multiple traits
+        B::hello as helloFromB;
+    }
+}
+
+//Trait with Abstract Method
+trait Loggable{
+    abstract protected function getUserId():int;
+
+    public function log(string $msg):void{
+        echo "User {$this->getUserId()}: $msg <br>";
+    }
+}
+
+class UserService{
+    use Loggable;
+
+    public function getUserId():int{
+        return 1;
+    }
+}
+
+$obj = new UserService();
+$resp = $obj->getUserId();
+echo $resp;
+
+
+//Trait with Interface
+interface LoggerInterface {
+    public function log(string $message): void;
+}
+trait LoggerTrait {
+    public function log(string $message): void {
+        echo "[LOG] $message<br>";
+    }
+}
+class Service implements LoggerInterface {
+    use LoggerTrait;
+}
+//Interface = contract/rule, Trait = implementation
+//Use inheritance to define what a class IS, and traits to define what a class CAN DO.
