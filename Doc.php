@@ -67,7 +67,7 @@ Encapsulation - Avoid direct access to properties and use setter functions to mo
 
 Restricting access to data using public, private, protected acess modifiers
 
-Visibility |  From class |	Inherited class  |	Outside
+Visibility |  From class  |   Inherited class    |	Outside
 public	         ✔️	               ✔️	            ✔️
 protected	     ✔️	               ✔️	            ❌
 private	         ✔️	               ❌	           ❌
@@ -154,6 +154,30 @@ class GooglePay extends PaymentGateway{
     }
 }
 
+
+//Another Abstraction----------------------------
+abstract class PaymentGateway{
+    protected $balance = 0;
+
+    abstract public function pay(int $amount):int;
+    
+}
+
+class Razorpay extends PaymentGateway{
+    public function pay(int $amount):int{
+        return $this->balance + $amount;
+    }
+}
+
+$model = new Razorpay();
+function process(PaymentGateway $obj, $val){
+    return $obj->pay($val);
+}
+
+$resp = process($model,500);
+echo $resp;
+
+
 //-------------------------------------------------------
 //Interfaces - Defining Rules so child classes follow them
 interface PaymentGateway{
@@ -172,3 +196,29 @@ function processPayment(PaymentGateway $object){
 }
 
 $resp = processPayment($gateway);
+
+//Another Interface-------------------------------------------
+interface PaymentGateway{
+    public function pay(int $amount):bool;
+
+    public function checkBalance(int $amount):int;
+}
+
+class Razorpay implements PaymentGateway{
+    public function pay(int $amount):bool{
+        return true;
+    }
+
+    public function checkBalance(int $amount):int{
+        return $this->balance;
+    }
+}
+
+$model = new Razorpay();
+function processPayment(PaymentGateway $obj, int $amt){
+    return $obj->pay($amt);
+}
+
+$resp = processPayment($model,500);
+echo $resp;
+//------------------------------------------------------------
