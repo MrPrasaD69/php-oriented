@@ -5,13 +5,13 @@ Answer:
 and traditional MVC apps without the overhead of larger frameworks.”
 
 
-Q1. What is CodeIgniter 4?
+Q. What is CodeIgniter 4?
 Answer:
 CodeIgniter 4 is a lightweight PHP MVC framework designed for high performance, security,
 and modern PHP (7.4+) features. It follows PSR standards and uses Composer.
 
 
-Q2. What are the major differences between CI3 and CI4?
+Q. What are the major differences between CI3 and CI4?
 Answer:
 Feature	                CI3	             CI4
 PHP version	            5.6+	         7.4+
@@ -24,7 +24,7 @@ Filters (middleware)    ❌	            ✅
 Entities	            ❌	            ✅
 
 
-Q3. What design pattern does CI4 follow?
+Q. What design pattern does CI4 follow?
 Answer:
 CodeIgniter 4 follows the MVC (Model–View–Controller) pattern.
 Model → Business logic & database
@@ -32,7 +32,7 @@ View → Presentation
 Controller → Handles request & response
 
 
-Q4. How do you create a controller in CI4?
+Q. How do you create a controller in CI4?
 php spark make:controller User
 
 namespace App\Controllers;
@@ -43,18 +43,18 @@ class User extends BaseController {
 }
 
 
-Q5. How does routing work in CI4?
+Q. How does routing work in CI4?
 app/Config/Routes.php
 $routes->get('users', 'User::index');
 $routes->post('login', 'Auth::login');
 
 
-Q6. What is Auto Routing?
+Q. What is Auto Routing?
 Answer:
 Auto Routing maps URLs directly to controller/method names.
 
 
-Q7. How is Model different in CI4?
+Q. How is Model different in CI4?
 Answer:
 CI4 models:
 
@@ -69,13 +69,13 @@ class UserModel extends Model {
 }
 
 
-Q8. What is $allowedFields?
+Q. What is $allowedFields?
 Answer:
 Prevents mass assignment vulnerability.
 Only these fields can be inserted/updated.
 
 
-Q9. What are Entities in CI4?
+Q. What are Entities in CI4?
 Answer:
 Entities represent single database rows as objects.
 class UserEntity extends Entity {
@@ -83,9 +83,9 @@ class UserEntity extends Entity {
 }
 
 
-Q10. What are Filters in CI4
+Q. What are Filters in CI4
 Answer:
-Filters act like middleware.
+Filters act like middleware. Filters are request/response middleware. Before controller/After controller
 
 Used for:
 Authentication
@@ -103,15 +103,25 @@ class AuthFilter implements FilterInterface {
     }
 }
 
+Q. What are Events?
+Events allow code execution at specific framework lifecycle points.
+Events::on('pre_system', function () {
+    log_message('info', 'System starting...');
+});
+Common events:
+pre_system,post_controller_constructor,post_system
+Configured in: app/Config/Events.php
+Filters for HTTP concerns, Events for application-wide behavior
 
-Q11. How does CI4 handle CSRF?
+
+
+Q. How does CI4 handle CSRF?
 Answer:
 Built-in CSRF protection using tokens.
-
 $globals['before'] = ['csrf'];
 
 
-Q12. How does CI4 prevent SQL Injection?
+Q. How does CI4 prevent SQL Injection?
 Answer:
 Query Builder
 Prepared Statements
@@ -119,35 +129,42 @@ Automatic escaping
 $db->table('users')->where('id', $id)->get();
 
 
-Q13. What is .env file in CI4?
+Q. What is .env file in CI4?
 Answer:
 Used for environment-based configuration.
-
 CI_ENVIRONMENT = development
 database.default.hostname = localhost
 
 
-Q14. What is BaseController?
+Q. What is BaseController?
 Answer:
 A parent controller where you:
-
 Load helpers
 Initialize services
 Share logic across controllers
 
 
-Q15. What are Helpers?
+Q. What are Helpers?
 Answer:
 Simple procedural functions.
+Helpers are the group of functions that are useful in assisting the user to perform specific tasks.
+There are three types of helper files. They are:
+URL helpers: Used for creating the links.
+Text helpers: Used for the formatting of text.
+Cookies helpers: Used to read and manage cookies.
 
+Q.What are hooks in CodeIgnitor?
+Answer:
+CodeIgniter’s hooks will provide a way to change the internal workings or framework functionalities without
+any need for hacking the core files. It permits script execution with a particular path within the CodeIgniter
 
-Q16. What are Services in CI4?
+Q. What are Services in CI4?
 Answer:
 Services manage shared class instances (Singleton-like).
 $session = \Config\Services::session();
 
 
-Q17. How does validation work?
+Q. How does validation work?
 Answer:
 $rules = [
     'email' => 'required|valid_email'
@@ -162,7 +179,7 @@ Rule groups
 Language-based messages
 
 
-Q18. Is CI4 REST-friendly?
+Q. Is CI4 REST-friendly?
 Answer:
 Yes. CI4 has:
 
@@ -171,7 +188,7 @@ RESTful routing
 API Response Trait
 
 
-Q19. Why CI4 is faster than Laravel?
+Q. Why CI4 is faster than Laravel?
 
 Answer:
 No heavy ORM like Eloquent
@@ -180,8 +197,86 @@ Minimal bootstrapping
 “CI4 trades features for speed and simplicity.”
 
 
-Q20. How do you handle API responses?
+Q. How do you handle API responses?
 return $this->response->setJSON([
     'status' => true,
     'data' => $users
 ]);
+
+Q.Helper vs Library?
+Helper** is a collection of common functions which we can use within Models, Views
+as well as in Controllers. Once we include the helper file, we can get access to the functions.
+It is not written in object-oriented format. It can be called in the same manner you call PHP functions.
+All built-in helper file names are suffixed with a word _helper (ex: email_helper.php)
+
+Library** is a class that has a set of functions that permits for creating aninstance of that class
+by $this->load->library() function. It is written in an object-oriented format.
+You must create an object of the class to call library functions by using the $this->library_name->method().
+All built-in library files do not have a specific suffix.
+
+
+Q.What are Drivers?
+Answer:
+Drivers in CodeIgniter 4 are a way to group multiple interchangeable implementations under a single
+interface-like parent class. They allow you to switch functionality without changing the calling code.
+
+A Driver is: A parent class, with multiple child driver classes that share the same API and are loaded dynamically
+Think of drivers as:
+“Different engines behind the same steering wheel.”
+CI4 cache supports multiple drivers:File,Redis,Memcached,APCu
+
+
+Q.What is used in Xampp - MySQL or MariaDB?
+Answer:
+XAMPP uses MariaDB, not Oracle MySQL.
+MariaDB is a community-driven fork of MySQL, created by the original MySQL developers after Oracle acquired MySQL.
+MariaDB is a drop-in replacement for MySQL
+Same:SQL syntax,Ports,Data directories,PHP extensions (mysqli, pdo_mysql)
+MySQL - InnoDB
+MariaDB - InnoDB, Aria (crash-safe MyISAM replacement), ColumnStore (analytics), Spider (sharding)
+
+
+Q.Can multiple Databases be used in CI4?
+Answer:
+Yes, CodeIgniter 4 supports multiple database connections simultaneously.
+You can configure multiple databases and switch or use them together within the same application.
+
+public $default = [
+    'DSN'      => '',
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'main_db',
+    'DBDriver' => 'MySQLi',
+];
+public $analytics = [
+    'DSN'      => '',
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'analytics_db',
+    'DBDriver' => 'MySQLi',
+];
+
+$db1 = \Config\Database::connect('default');
+$db2 = \Config\Database::connect('analytics');
+
+
+class UserModel extends Model {
+    protected $table = 'users';
+}
+class ReportModel extends Model {
+    protected $DBGroup = 'analytics';
+    protected $table  = 'reports';
+}
+
+.env-
+database.default.database = main_db
+database.analytics.database = analytics_db
+
+
+Q.What are Sessions?
+Answer:
+Maintaining user's state across the web by using Session. Default timeout of 24mins in PHP.
+
+Sessions are stored in server files by default, can be stored in DB as well.
