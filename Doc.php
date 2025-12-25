@@ -222,3 +222,46 @@ function processPayment(PaymentGateway $obj, int $amt){
 $resp = processPayment($model,500);
 echo $resp;
 //------------------------------------------------------------
+
+
+//PHP Traits--------------------------------------------------
+/*
+It copies the trait’s code into the class at compile time.
+Traits are NOT types. You cannot type-hint a trait
+function test(Logger $log) {} // ❌ invalid
+
+*/
+trait CheckAccount{
+    public function checkAccount(){
+        echo "Account Has been Checked";
+    }
+}
+
+class MyClass{
+    use CheckAccount;
+
+}
+$obj = new MyClass();
+$obj->checkAccount();
+
+
+//Using Traits with Encapsulation
+trait PaymentGatewayTrait{
+    protected $balance = 0;
+}
+
+class Wallet{
+    use PaymentGatewayTrait;
+
+    public function checkBalance(){
+        return $this->balance;
+    }
+
+    public function setBalance($amount){
+        return $this->balance += $amount;
+    }
+}
+
+$wallet = new Wallet();
+$resp = $wallet->setBalance(500);
+echo $resp;
