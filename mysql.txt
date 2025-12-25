@@ -1,0 +1,202 @@
+Q. What is MySQL?
+Answer:
+MySQL is an open-source relational database management system (RDBMS) that usesSQL and follows a
+client–server architecture.
+
+
+Q. What is a database?
+Answer:
+A database is an organized collection of data stored electronically for efficient retrieval and management.
+
+
+Q. What is a table?
+Answer:
+A table is a structured collection of rows and columns representing data.
+
+
+Q. What is a primary key?
+Answer:
+A primary key:
+Uniquely identifies a row
+Cannot be NULL
+Cannot have duplicates
+
+
+Q. What is a foreign key?
+Answer:
+A foreign key creates a relationship between two tables.
+
+
+Q. What are different types of keys?
+Answer:Primary Key,Foreign Key,Unique Key,Composite Key,Candidate Key
+
+
+Q. Types of joins in MySQL?
+Answer:INNER JOIN,LEFT JOIN,RIGHT JOIN,CROSS JOIN
+
+
+Q. What is an index?
+Answer:
+An index improves search performance by allowing faster data retrieval.
+
+
+Q. How does an index work?
+Answer:
+MySQL uses B-Tree indexes (mostly) to reduce full table scans.
+
+
+Q. Does indexing always improve performance?
+Answer:
+No, Speed up SELECT,Slow down INSERT/UPDATE/DELETE,Use extra storage
+
+
+Q. Types of indexes?
+Answer: PRIMARY,UNIQUE,INDEX (normal),FULLTEXT,COMPOSITE
+
+
+Q. What does EXPLAIN show?
+Answer: Index usage,Join type,Rows scanned,Query cost
+
+
+Q. What is a transaction?
+Answer:
+A transaction is a group of SQL statements executed as a single unit of work.
+
+
+Q. What is ACID?
+Answer: Atomicity,Consistency,Isolation,Durability
+
+
+Q. Does MySQL support transactions?
+Answer:
+✅ Yes, using InnoDB
+❌ No, using MyISAM
+
+
+Q. What is isolation level?
+Answer:
+Controls how transactions are isolated from each other.
+
+
+Q. MySQL isolation levels?
+Answer: READ UNCOMMITTED,READ COMMITTED,REPEATABLE READ (default),SERIALIZABLE
+
+
+Q. What is a view?
+Answer:
+A view is a virtual table based on a query.
+
+
+Q. How to prevent SQL Injection?
+Answer: Prepared statements, Parameter binding, Escaping inputs
+
+
+Q. Difference between DELETE, TRUNCATE, DROP?
+Answer: 
+Delete removes data, can Rollback, Slow
+TRUNCATE empties table, resets AUTO Increment for PKs, No Rollback, Fast
+DROP removes structure, No Rollback, Fastest
+
+
+Q. What is the difference between CHAR and VARCHAR?
+Answer:
+CHAR → Fixed length
+VARCHAR → Variable length
+CHAR datatype can hold a maximum of 255 characters while VARCHAR can store up to 4000 characters.
+
+
+Q. How do you Create a User in MySQL?
+Answer:
+CREATE USER 'username'@'host' IDENTIFIED BY 'password';
+
+
+Q. What is the MySQL server's default port?
+Answer:
+The default port for MySQL server is 3306.
+
+
+Q. What is Difference between CHAR_LENGTH and LENGTH?
+Anwer:
+LENGTH: Returns the byte count of a string. For multi-byte characters, it counts the total number of bytes used.
+CHAR_LENGTH: Returns the character count of a string, counting each character regardless of byte size.
+
+
+Q. What do you understand by % and _ in the like statement?
+Answer:
+In the LIKE statement, the % and _ symbols are used for pattern matching:
+
+%: Represents zero or more characters. It matches any sequence of characters, including an empty sequence.
+_: Represents exactly one character. It matches any single character.
+Example:
+
+SELECT * FROM Employees WHERE Name LIKE 'J%n';  
+SELECT * FROM Employees WHERE Name LIKE 'J_n';
+
+
+Q. Explain the main difference between FLOAT and DOUBLE?
+Answer:
+FLOAT: A single-precision floating-point number. It stores a 4-byte representation of the number with a precision of 7 decimal digits.
+DOUBLE: A double-precision floating-point number. It stores an 8-byte representation of the number with a precision of 15 decimal digits.
+
+
+Q. Explain the difference between having and where clause in MySQL.
+Answer:
+WHERE statement is used to filter rows but HAVING statement is used to filter groups.
+GROUP BY is not used with WHERE. HAVING clause is used with GROUP BY.
+
+
+Q. How does NOW() differ from CURRENT_DATE()?
+Answer:
+NOW() gives current year, month, and date with hours, minutes, and seconds
+CURRENT_DATE shows current year current month, and current date.
+
+
+Q. What is the use of the ‘DISTINCT’ keyword in MySQL?
+Answer:
+The DISTINCT keyword is used to remove duplicate rows from the result set, returning only unique values for the specified columns
+
+
+Q. What is a heap table in MySQL?
+Answer:
+A heap table is usually used for temporary and fast temporary storage.
+BLOB or TEXT fields are not permitted in the heap table.
+comparison operator like =, <,>, = >,=< can be used only.
+Heap table didn't support the AUTO_INCREMENT command.
+Indexes should be NOT NULL in the heap table.
+
+
+Q. What is the difference between UNION and UNION ALL in MySQL?
+Answer:
+During combining the results of more than one SELECT statement, the UNION operator deletes duplicate rows between the
+various SELECT statements. The UNION ALL also combines the result set of more than one SELECT statement, but it does
+not delete duplicate rows.
+
+
+Q. What is a view? How to create a view?
+Answer:
+A database object that has no value is called view. Rows and columns exist in a view. A view is virtual table.
+it is created by combining one or more tables. The difference of a view and a table is that views are definition
+that build on other tables. If the underlying table changes, the View will also reflect those same changes.
+Syntax: CREATE VIEW view_name AS  SELECT columns FROM tables  [WHERE conditions];
+
+
+Q. How can we save images in MySQL?
+Answer:
+In MySQL, Blobs can be used to store images. All database images are first converted into blobs then saved and then
+they will be added to the database, and finally, it will later be stored on the disk.
+
+
+Q. What are trigger and how many TRIGGERS are available in MySQL table?
+Answer:
+A trigger is a procedural code in a database. Triggers are automatically triggered when specific events occur on a
+particular table. During column updating triggers are invoked automatically.
+SIX triggers are available in MySQL table.
+
+BEFORE INSERT
+AFTER INSERT
+BEFORE UPDATE
+AFTER UPDATE
+BEFORE DELETE
+AFTER DELETE
+
+
