@@ -308,6 +308,8 @@ echo $resp;
 
 
 //Trait with Interface
+//Interface = contract/rule, Trait = implementation
+//Use inheritance to define what a class IS, and traits to define what a class CAN DO.
 interface LoggerInterface {
     public function log(string $message): void;
 }
@@ -319,5 +321,56 @@ trait LoggerTrait {
 class Service implements LoggerInterface {
     use LoggerTrait;
 }
-//Interface = contract/rule, Trait = implementation
-//Use inheritance to define what a class IS, and traits to define what a class CAN DO.
+
+
+//--------------------------------------------------------------
+/*
+Static Methods in PHP-
+Static methods belong to the class itself, not to an individual object.
+You can call them without creating an instance of the class.
+*/
+class MathUtils{
+    public static function add($a,$b){
+        return $a + $b;
+    }
+}
+echo MathUtils::add(3,6);
+
+//Static methods cannot use $this, because $this refers to an object instance. can use self:: instead:
+class Counter {
+    static $count = 0;
+
+    public static function increment() {
+        self::$count++;
+    }
+}
+
+//Static methods often work with static properties
+class User {
+    public static $totalUsers = 0;
+
+    public static function register(){
+        self::$totalUsers++;
+    }
+}
+
+User::register();
+echo User::$totalUsers;
+
+//Accessing static methods
+//From outside the class
+ClassName::methodName();
+
+//From inside the same class
+self::methodName();
+
+//From child classes (late static binding)
+static::methodName();
+
+/*
+self:: → compile-time binding
+Always refers to the class where it is defined
+
+static:: → late static binding
+Refers to the class that called it
+*/
