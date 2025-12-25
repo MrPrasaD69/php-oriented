@@ -1,0 +1,187 @@
+“Why CodeIgniter 4?”
+
+Answer:
+“CI4 is lightweight, fast, PSR-compliant, secure by default, and ideal for scalable APIs
+and traditional MVC apps without the overhead of larger frameworks.”
+
+
+Q1. What is CodeIgniter 4?
+Answer:
+CodeIgniter 4 is a lightweight PHP MVC framework designed for high performance, security,
+and modern PHP (7.4+) features. It follows PSR standards and uses Composer.
+
+
+Q2. What are the major differences between CI3 and CI4?
+Answer:
+Feature	                CI3	             CI4
+PHP version	            5.6+	         7.4+
+Architecture	        Procedural	     Object-Oriented
+Namespace	            ❌
+Composer	            ❌	            ✅
+Environment support	    ❌	            ✅
+Routing	                Basic	         Advanced
+Filters (middleware)    ❌	            ✅
+Entities	            ❌	            ✅
+
+
+Q3. What design pattern does CI4 follow?
+Answer:
+CodeIgniter 4 follows the MVC (Model–View–Controller) pattern.
+Model → Business logic & database
+View → Presentation
+Controller → Handles request & response
+
+
+Q4. How do you create a controller in CI4?
+php spark make:controller User
+
+namespace App\Controllers;
+class User extends BaseController {
+    public function index() {
+        return "Hello User";
+    }
+}
+
+
+Q5. How does routing work in CI4?
+app/Config/Routes.php
+$routes->get('users', 'User::index');
+$routes->post('login', 'Auth::login');
+
+
+Q6. What is Auto Routing?
+Answer:
+Auto Routing maps URLs directly to controller/method names.
+
+
+Q7. How is Model different in CI4?
+Answer:
+CI4 models:
+
+Extend CodeIgniter\Model
+Use Query Builder
+Support Entity classes
+Have built-in validation
+
+class UserModel extends Model {
+    protected $table = 'users';
+    protected $allowedFields = ['name', 'email'];
+}
+
+
+Q8. What is $allowedFields?
+Answer:
+Prevents mass assignment vulnerability.
+Only these fields can be inserted/updated.
+
+
+Q9. What are Entities in CI4?
+Answer:
+Entities represent single database rows as objects.
+class UserEntity extends Entity {
+    protected $dates = ['created_at'];
+}
+
+
+Q10. What are Filters in CI4
+Answer:
+Filters act like middleware.
+
+Used for:
+Authentication
+Authorization
+CORS
+CSRF
+Logging 
+
+app/Config/Filters.php
+class AuthFilter implements FilterInterface {
+    public function before(RequestInterface $request) {
+        if (! session()->get('logged_in')) {
+            return redirect()->to('/login');
+        }
+    }
+}
+
+
+Q11. How does CI4 handle CSRF?
+Answer:
+Built-in CSRF protection using tokens.
+
+$globals['before'] = ['csrf'];
+
+
+Q12. How does CI4 prevent SQL Injection?
+Answer:
+Query Builder
+Prepared Statements
+Automatic escaping
+$db->table('users')->where('id', $id)->get();
+
+
+Q13. What is .env file in CI4?
+Answer:
+Used for environment-based configuration.
+
+CI_ENVIRONMENT = development
+database.default.hostname = localhost
+
+
+Q14. What is BaseController?
+Answer:
+A parent controller where you:
+
+Load helpers
+Initialize services
+Share logic across controllers
+
+
+Q15. What are Helpers?
+Answer:
+Simple procedural functions.
+
+
+Q16. What are Services in CI4?
+Answer:
+Services manage shared class instances (Singleton-like).
+$session = \Config\Services::session();
+
+
+Q17. How does validation work?
+Answer:
+$rules = [
+    'email' => 'required|valid_email'
+];
+
+if (! $this->validate($rules)) {
+    return $this->validator->getErrors();
+}
+Supports:
+Custom rules
+Rule groups
+Language-based messages
+
+
+Q18. Is CI4 REST-friendly?
+Answer:
+Yes. CI4 has:
+
+ResourceController
+RESTful routing
+API Response Trait
+
+
+Q19. Why CI4 is faster than Laravel?
+
+Answer:
+No heavy ORM like Eloquent
+Lightweight core
+Minimal bootstrapping
+“CI4 trades features for speed and simplicity.”
+
+
+Q20. How do you handle API responses?
+return $this->response->setJSON([
+    'status' => true,
+    'data' => $users
+]);
