@@ -377,3 +377,31 @@ Always refers to the class where it is defined
 static:: → late static binding
 Refers to the class that called it
 */
+
+class Mathutils{
+    static $counter = 0;
+    public static function sum($a,$b){
+        return $a + $b;
+    }
+    
+    public static function increment(){
+        self::$counter ++;
+    }
+    
+    public static function getCounter(){
+        return self::$counter;
+    }
+}
+
+class Algebra extends Mathutils{
+    public function startAlgebra(){
+        static::increment();
+    }
+}
+// echo Mathutils::sum(3,6);
+// Mathutils::increment();
+// echo Mathutils::getCounter();
+
+$obj = new Algebra();
+$obj->startAlgebra();
+echo $obj->getCounter();
