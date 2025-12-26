@@ -100,8 +100,8 @@ DROP removes structure, No Rollback, Fastest
 
 Q. What is the difference between CHAR and VARCHAR?
 Answer:
-CHAR → Fixed length
-VARCHAR → Variable length
+CHAR → Fixed length, always uses N size, Trailing spaces are ignored in comparisons- 'ABC' = 'ABC   ' → TRUE
+VARCHAR → Variable length, only uses actual character length under N size, 'ABC' ≠ 'ABC   ' no the same
 CHAR datatype can hold a maximum of 255 characters while VARCHAR can store up to 4000 characters.
 
 
@@ -199,4 +199,43 @@ AFTER UPDATE
 BEFORE DELETE
 AFTER DELETE
 
+
+Q. What is DDL (Data Definition Language)?
+Answer:
+DDL is used to define, change, or remove database structures (schema). works on database objects, not the data itself.
+CREATE	        Create database objects
+ALTER	        Modify structure
+DROP	        Delete object permanently
+TRUNCATE	    Remove all data, keep structure
+RENAME          Rename object
+
+
+Q. What is DML (Data Manipulation Language)?
+Answer:
+DML is used to insert, update, delete, and select data inside tables
+INSERT	Add new data
+UPDATE	Modify existing data
+DELETE	Remove specific data
+SELECT	Retrieve data
+
+
+Q. What are Aggregate Functions?
+Answer:
+They perform calculations on a set of rows, Return one value per group
+COUNT()	 Counts rows
+SUM()	 Total of values
+AVG()	 Average value
+MIN()	 Smallest value
+MAX()	 Largest value
+
+SELECT department, COUNT(*) AS total_employees
+FROM employees
+GROUP BY department;
+
+
+//WHERE cannot filter aggregate results — use HAVING.
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+HAVING AVG(salary) > 50000;
 
