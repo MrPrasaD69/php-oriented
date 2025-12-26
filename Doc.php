@@ -284,6 +284,9 @@ class Test {
         B::hello as helloFromB;
     }
 }
+$obj = new Test();
+$obj->hello(); //runs from Trait A
+$obj->helloFromB(); //runs from Trait B
 
 //Trait with Abstract Method
 trait Loggable{
