@@ -224,6 +224,44 @@ echo $resp;
 //------------------------------------------------------------
 
 
+//Interface vs Abstract Class
+//Abstract class-
+abstract class User{
+    public function login(){
+    }
+}
+
+class customer extends User{
+    public function dashboard(){
+    }
+}
+
+class admin extends User{
+    public function dashboard(){
+    }
+}
+
+//Interface-
+interface Notification
+{
+    public function send($message);
+}
+class EmailNotification implements Notification
+{
+    public function send($message)
+    {
+        // Send email
+    }
+}
+
+class SMSNotification implements Notification
+{
+    public function send($message)
+    {
+        // Send SMS
+    }
+}
+
 //PHP Traits--------------------------------------------------
 /*
 It copies the trait’s code into the class at compile time.
@@ -405,3 +443,25 @@ class Algebra extends Mathutils{
 $obj = new Algebra();
 $obj->startAlgebra();
 echo $obj->getCounter();
+
+
+
+/* Namespaces in PHP
+Namespaces in PHP are like folders for your classes, functions, and constants.
+They help avoid name collisions, organize code, and make autoloading easier.
+*/
+namespace App\Models;
+class User {}
+
+namespace Vendor\Package;
+class User {}
+/* Without namespaces → PHP will throw “Cannot redeclare class User”.
+With namespaces, each User lives in its own space. 
+Must be the first line of the file (before any code)
+*/
+$obj = new \App\Controllers\HomeController(); // for using namespaced class
+
+//with the *use keyword
+use App\Controllers\HomeController as Home; // can use AS alias
+$obj = new HomeController();
+
