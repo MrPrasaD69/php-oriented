@@ -262,6 +262,9 @@ class SMSNotification implements Notification
     }
 }
 
+//Abstract Class - Child class can call, not call or modify concrete methods from Parent but must implement abstract methods.
+//Interface - Child class must implement all methods defined in the interface. No concrete methods allowed in interface.
+
 //PHP Traits--------------------------------------------------
 /*
 It copies the trait’s code into the class at compile time.
