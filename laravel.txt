@@ -1,0 +1,172 @@
+1. Laravel is an open-source PHP framework based on the MVC (Model-View-Controller) architecture
+Routing
+Authentication
+Middleware
+Eloquent ORM
+Queues
+Caching
+Validation
+API development
+
+
+
+2. Laravel Request Lifecycle
+Browser
+      ↓
+public/index.php
+      ↓
+Bootstrap Application
+      ↓
+Service Providers
+      ↓
+Middleware
+      ↓
+Route
+      ↓
+Controller
+      ↓
+Response
+      ↓
+Browser
+
+
+
+3. Dependency Injection means passing required objects to a class instead of creating them inside the class.
+Laravel automatically provides dependencies using the Service Container.
+Without Dependency Injection-
+class UserController
+{
+    public function store()
+    {
+        $service = new UserService();
+
+        $service->createUser();
+    }
+}
+
+
+With Dependency Injection-
+class UserController extends Controller
+{
+    protected $service;
+
+    public function __construct(UserService $service)
+    {
+        $this->service = $service;
+    }
+
+    public function store()
+    {
+        $this->service->createUser();
+    }
+}
+
+
+4. Service Container
+The Service Container is Laravel's dependency management system.
+It automatically creates objects and resolves dependencies.
+
+Service-
+class PaymentService
+{
+    public function pay()
+    {
+        return "Payment Successful";
+    }
+}
+
+Controller-
+class PaymentController extends Controller
+{
+    public function __construct(PaymentService $payment)
+    {
+        $this->payment = $payment;
+    }
+
+    public function store()
+    {
+        return $this->payment->pay();
+    }
+}
+
+
+Laravel automatically creates:
+PaymentService
+
+No need to write
+new PaymentService();
+
+
+5. Service Providers
+Service Providers tell Laravel how to register services into the Service Container.
+Every Laravel application loads service providers during bootstrapping.
+
+public function register()
+{
+    $this->app->bind(
+        PaymentInterface::class,
+        StripePayment::class
+    );
+}
+
+
+6. Middleware
+Middleware filters HTTP requests before they reach the controller
+Mostly used for Logged in Session based Route filtering with Guest and Auth Filters
+
+
+7. Global Middleware and Route Middleware
+Global Runs for every request
+Configured in:
+app/Http/Kernel.php
+
+Route Runs only for selected routes.
+
+
+8. Eloquent ORM
+Eloquent ORM Object Relational Mapping lets you interact with the database using PHP models instead of writing raw SQL.
+
+
+9. Difference between get(), first(), find(), firstOrFail()
+get()
+Returns multiple records.
+
+first()
+Returns first matching record.
+
+find()
+Searches by primary key.
+
+firstOrFail()
+If record doesn't exist Laravel throws 404 Not Found
+
+
+10. N+1 Query Problem
+This Problem occurs when Laravel executes one query to retrieve parent records and then executes an additional query for each 
+parent to retrieve related data.
+
+
+Example
+Models:
+// User.php
+public function posts()
+{
+    return $this->hasMany(Post::class);
+}
+
+Code:
+$users = User::all()
+foreach ($users as $user) {
+    echo $user->posts->count();
+}
+If there are 100 users: 1 Query → Fetch all users 100 Queries → Fetch posts for each user Total = 101 Queries
+
+
+Solution: Eager Loading
+$users = User::with('posts')->get();
+foreach ($users as $user) {
+    echo $user->posts->count();
+}
+Now Laravel executes only: 1 Query → Users 1 Query → Posts Total = 2 Queries
+For 500 customers, instead of 1 Customer and 1 Order each query separately, we fetch all customers with orders in 2 queries
+
