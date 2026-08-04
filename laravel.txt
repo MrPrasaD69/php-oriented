@@ -380,3 +380,35 @@ Schedule::command('backup:run')->hourly();
 
 Weekly
 Schedule::command('cleanup:logs')->weekly();
+
+
+21. CSRF Protection
+CSRF (Cross-Site Request Forgery) is an attack where a malicious website tricks a logged-in user into sending an unwanted request.
+Laravel protects forms using CSRF tokens.
+
+When the form is submitted:
+Laravel compares the submitted token with the user's session token.
+
+If they don't match:
+419 Page Expired
+
+
+22. Rate Limiting
+Rate Limiting restricts how many requests a client can make in a given time.
+It helps prevent abuse, brute-force attacks, and API overload.
+
+Route::middleware('throttle:60,1')->group(function () {
+    Route::get('/users', function(){
+    });
+});
+
+
+
+23. Difference Between Collection and Query Builder
+Query Builder Works directly with the database.
+$users = User::where('status',1)->get();
+
+Collection Works after data is loaded.
+$users = User::all();
+$active = $users->where('status',1);
+
