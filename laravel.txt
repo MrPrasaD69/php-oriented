@@ -170,3 +170,213 @@ foreach ($users as $user) {
 Now Laravel executes only: 1 Query → Users 1 Query → Posts Total = 2 Queries
 For 500 customers, instead of 1 Customer and 1 Order each query separately, we fetch all customers with orders in 2 queries
 
+
+
+11.Eloquent Relationships
+Relationships define how one database table is connected to another
+Laravel supports:
+One to One
+One to Many
+Many to Many
+Has Many Through
+Polymorphic
+
+One-to-One Relationship
+Ex: One User has one Profile.
+
+One-to-Many Relationship
+Ex: One user has many posts.
+
+Many-to-Many Relationship
+Ex: Students ↔ Courses
+
+
+
+12. Lazy Loading vs Eager Loading
+Lazy Loading
+Related data is loaded only when accessed.
+
+Ex:
+$user = User::find(1);
+$user->posts;
+
+SQL Queries
+SELECT * FROM users;
+SELECT * FROM posts WHERE user_id=1;
+
+
+Eager Loading
+Related data is loaded along with the main query.
+$user = User::with('posts')->find(1);
+
+Multiple Relationships
+User::with(['posts','profile','roles'])->get(); 
+
+
+
+13. Accessors and Mutators
+Accessors modify data when retrieving it.
+
+Mutators modify data before saving it
+
+
+Accessor Ex: 
+Database value : rahul
+
+Accessor
+protected function name(): Attribute
+{
+    return Attribute::make(
+        get: fn ($value) => strtoupper($value),
+    );
+}
+
+Output
+RAHUL
+
+
+Mutator Ex:
+User enters
+rahul
+
+Mutator
+protected function name(): Attribute
+{
+    return Attribute::make(
+        set: fn ($value) => ucfirst($value),
+    );
+}
+
+Saved
+Rahul
+
+
+14. Soft Deletes
+Soft Delete marks a record as deleted without permanently removing it from the database.
+Laravel sets the deleted_at timestamp instead of deleting the row.
+
+
+15. delete() and forceDelete()
+
+delete() Record remains in the database.
+$user->delete();
+deleted_at gets updated.
+
+forceDelete()
+$user->forceDelete();
+Record is permanently removed.
+
+
+16. Events and Listeners
+Events notify the application that something happened.
+
+Listeners perform actions in response to those events.
+
+Ex:
+User registers Event
+UserRegistered::dispatch($user);
+
+Listener
+class SendWelcomeEmail
+{
+    public function handle(UserRegistered $event)
+    {
+        Mail::to($event->user)->send(new WelcomeMail());
+    }
+}
+
+
+17. Laravel Queues
+Queues run time-consuming tasks in the background so users don't have to wait.
+Runs on Jobs in background to process without blocking the request on Frontend with Queue worker
+Create Job-
+php artisan make:job SendWelcomeEmail
+
+Job Example-
+public function handle()
+{
+    Mail::to($this->user)->send(new WelcomeMail());
+}
+
+Dispatch Job-
+SendWelcomeEmail::dispatch($user);
+
+Start Worker-
+php artisan queue:work
+
+
+18. What Happens if a Queue Job Fails
+Laravel stores failed jobs in the failed_jobs table.
+
+Ex:
+Email server is down.
+Queue job fails.
+
+Later,
+php artisan queue:retry all
+Emails are retried.
+
+
+19. Laravel Cache
+Cache stores frequently accessed data temporarily to reduce database queries and improve performance
+
+
+Without Cache-
+Every request
+↓
+Database Query
+↓
+Response
+
+With Cache-
+First request
+↓
+Database
+↓
+Cache
+
+Second request
+↓
+Cache
+↓
+Response
+
+No database query.
+
+$users = Cache::remember('users', 60, function () {
+    return User::all();
+});
+If the cache key exists:
+Laravel returns cached data.
+
+Otherwise:
+It executes the query, stores the result for 60 minutes, and returns it.
+
+Cache Drivers-
+File
+Database
+Redis
+Memcached
+
+
+20.Laravel Scheduler
+The Scheduler lets you define recurring tasks in code instead of creating multiple cron jobs.
+
+Ex-
+use Illuminate\Support\Facades\Schedule;
+
+Schedule::command('report:generate')->daily();
+Run Scheduler
+
+Linux cron
+* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1
+This single cron entry checks every minute for scheduled tasks.
+
+Every minute
+Schedule::command('emails:send')->everyMinute();
+
+Every hour
+Schedule::command('backup:run')->hourly();
+
+Weekly
+Schedule::command('cleanup:logs')->weekly();
