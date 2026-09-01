@@ -42,9 +42,7 @@
 
 3. Find the Occurrence of duplicate Element in Array
 
-$arr = [2,45,3,6,8,1,9,10,2,11,3,89]; 
-
-$len = count($arr); 
+$arr = [2,45,3,6,8,1,9,10,2,11,3,89];
 $found = []; 
 
 foreach($arr as $key=>$val){ 
@@ -52,7 +50,7 @@ foreach($arr as $key=>$val){
   if(isset($found[$val])){ 
     echo "Found Value $val at index $key \n"; 
   } 
-  else{ 
-    $found[$val] = $key; 
-  } 
+  
+  $found[$val] = true; 
+
 }
