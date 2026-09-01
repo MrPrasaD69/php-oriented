@@ -21,3 +21,20 @@
   echo "After Sorting \n"; 
   print_r($arr);
 
+
+2. Reverse String Elements
+
+  //Reverse string elements 
+  $str = "Hello World"; 
+
+  //count the string elements 
+  $len = strlen($str); 
+
+  $reversed = ""; 
+
+  //Place the cursor at the last element, travel backwards and append 
+  for($i = $len - 1; $i >= 0; $i--){ 
+    $reversed .= $str[$i]; 
+  } 
+
+  echo $reversed;
