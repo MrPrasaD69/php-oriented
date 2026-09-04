@@ -21,6 +21,40 @@
   echo "After Sorting \n"; 
   print_r($arr);
 
+  ***************************************************************************
+  For ASC/DESC
+  function sortNum($sortType){
+		$arr = [1,3,5,7,3,1,2,67,454,135,90,7];
+		$len = count($arr);
+
+		if($sortType=='ASC'){
+			for($i=0; $i<$len;$i++){
+				for($j=0;$j< $len - 1 - $i; $j++){
+					if($arr[$j] > $arr[$j + 1])	{
+						$temp = $arr[$j];
+						$arr[$j] = $arr[$j + 1];
+						$arr[$j + 1] = $temp;
+					}
+				}
+			}
+		}
+		else{
+			for($i = 0; $i < $len; $i++){
+				for($j = 0; $j < $len - 1 - $i; $j++){
+					if($arr[$j] < $arr[$j + 1]){
+						$temp = $arr[$j];
+						$arr[$j] = $arr[$j + 1];
+						$arr[$j + 1] = $temp;
+					}
+				}
+			}
+		}
+
+		return $arr;
+	}
+
+	print_r(sortNum('DESC'));
+
 
 2. Reverse String Elements
 
